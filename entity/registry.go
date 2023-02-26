@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -15,7 +15,10 @@ type Registry struct {
 	Type         string `json:"type,omitempty"`
 }
 
-func (e *Registry) Into() *model.Registry {
+func (e *Registry) IntoModel() *model.Registry {
+	if e == nil {
+		return nil
+	}
 	var m model.Registry
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -29,7 +32,10 @@ func (e *Registry) Into() *model.Registry {
 	return &m
 }
 
-func (e *Registry) From(m *model.Registry) {
+func (e *Registry) FromModel(m *model.Registry) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -42,12 +48,15 @@ func (e *Registry) From(m *model.Registry) {
 }
 
 func CreateRegistry(e *Registry) *Registry {
+	if e == nil {
+		e = &Registry{}
+	}
 	e.RegistryId = util.CreateObjectId()
 	return e
 }
 
 func CreateRegistryFromModel(m *model.Registry) *Registry {
 	var e Registry
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Binbiubiubiu/cnpmcore/core/entity"
+	"github.com/Binbiubiubiu/cnpmcore/entity"
 	"github.com/Binbiubiubiu/cnpmcore/global"
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/samber/lo"
 	"gorm.io/gorm"
 )

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -13,7 +13,10 @@ type Change struct {
 	Data       any    `json:"data,omitempty"`
 }
 
-func (e *Change) Into() *model.Change {
+func (e *Change) IntoModel() *model.Change {
+	if e == nil {
+		return nil
+	}
 	var m model.Change
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -25,7 +28,10 @@ func (e *Change) Into() *model.Change {
 	return &m
 }
 
-func (e *Change) From(m *model.Change) {
+func (e *Change) FromModel(m *model.Change) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -36,12 +42,15 @@ func (e *Change) From(m *model.Change) {
 }
 
 func CreateChange(e *Change) *Change {
+	if e == nil {
+		e = &Change{}
+	}
 	e.ChangeId = util.CreateObjectId()
 	return e
 }
 
 func CreateChangeFromModel(m *model.Change) *Change {
 	var e Change
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

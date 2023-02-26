@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/core/entity"
+	"github.com/Binbiubiubiu/cnpmcore/entity"
 	"github.com/Binbiubiubiu/cnpmcore/global"
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/samber/lo"
 )
 
@@ -21,12 +21,12 @@ func (r *BinaryRepository) SaveBinary(binary *entity.Binary) (err error) {
 		}
 		binary.CreateAt = m.CreateAt
 	}
-	m = binary.Into()
+	m = binary.IntoModel()
 	err = global.DB.Save(m).Error
 	if err != nil {
 		return
 	}
-	binary.From(m)
+	binary.FromModel(m)
 	return
 }
 

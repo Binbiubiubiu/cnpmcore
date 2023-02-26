@@ -6,8 +6,8 @@ import (
 	"path"
 	"time"
 
-	"github.com/Binbiubiubiu/cnpmcore/common/enum"
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/enum"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 	"github.com/samber/lo"
 )
@@ -79,7 +79,10 @@ func (t *Task) Start() TaskUpdateCondition {
 	return cond
 }
 
-func (e *Task) Into() *model.Task {
+func (e *Task) IntoModel() *model.Task {
+	if e == nil {
+		return nil
+	}
 	var m model.Task
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -99,7 +102,10 @@ func (e *Task) Into() *model.Task {
 	return &m
 }
 
-func (e *Task) From(m *model.Task) {
+func (e *Task) FromModel(m *model.Task) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -118,6 +124,9 @@ func (e *Task) From(m *model.Task) {
 }
 
 func (e *Task) FromHistory(m *model.HistoryTask) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -135,13 +144,16 @@ func (e *Task) FromHistory(m *model.HistoryTask) {
 }
 
 func CreateTask(e *Task) *Task {
+	if e == nil {
+		e = &Task{}
+	}
 	e.TaskId = util.CreateObjectId()
 	return e
 }
 
 func CreateTaskFromModel(m *model.Task) *Task {
 	var e Task
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }
 

@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -17,7 +17,10 @@ type User struct {
 	Scopes            []string `json:"scopes,omitempty"`
 }
 
-func (e *User) Into() *model.User {
+func (e *User) IntoModel() *model.User {
+	if e == nil {
+		return nil
+	}
 	var m model.User
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -33,7 +36,10 @@ func (e *User) Into() *model.User {
 	return &m
 }
 
-func (e *User) From(m *model.User) {
+func (e *User) FromModel(m *model.User) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -48,12 +54,15 @@ func (e *User) From(m *model.User) {
 }
 
 func CreateUser(e *User) *User {
+	if e == nil {
+		e = &User{}
+	}
 	e.UserId = util.CreateObjectId()
 	return e
 }
 
 func CreateUserFromModel(m *model.User) *User {
 	var e User
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

@@ -10,4 +10,6 @@ type Package struct {
 	Description        string `gorm:"type:varchar(10240) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;comment:package description;"`
 	AbbreviatedsDistId string `gorm:"size:24;comment:all abbreviated manifests dist id;"`
 	ManifestsDistId    string `gorm:"size:24;comment:all full manifests dist id;"`
+	AbbreviatedsDist   *Dist  `gorm:"-"`
+	ManifestsDist      *Dist  `gorm:"-"`
 }

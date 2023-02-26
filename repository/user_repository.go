@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/core/entity"
+	"github.com/Binbiubiubiu/cnpmcore/entity"
 	"github.com/Binbiubiubiu/cnpmcore/global"
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/samber/lo"
 )
 
@@ -21,12 +21,12 @@ func (r *UserRepository) SaveUser(user *entity.User) (err error) {
 		}
 		user.CreateAt = m.CreateAt
 	}
-	m = user.Into()
+	m = user.IntoModel()
 	err = global.DB.Save(m).Error
 	if err != nil {
 		return
 	}
-	user.From(m)
+	user.FromModel(m)
 	return
 }
 
@@ -82,12 +82,12 @@ func (r *UserRepository) SaveToken(token *entity.Token) (err error) {
 		}
 		token.CreateAt = m.CreateAt
 	}
-	m = token.Into()
+	m = token.IntoModel()
 	err = global.DB.Save(m).Error
 	if err != nil {
 		return
 	}
-	token.From(m)
+	token.FromModel(m)
 	return
 }
 

@@ -3,7 +3,7 @@ package entity
 import (
 	"fmt"
 
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -24,7 +24,10 @@ func (b *Binary) GetStorePath() string {
 	return fmt.Sprintf("/binaries/%s%s%s", b.Category, b.Parent, b.Name)
 }
 
-func (e *Binary) Into() *model.Binary {
+func (e *Binary) IntoModel() *model.Binary {
+	if e == nil {
+		return nil
+	}
 	var m model.Binary
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -39,7 +42,10 @@ func (e *Binary) Into() *model.Binary {
 	return &m
 }
 
-func (e *Binary) From(m *model.Binary) {
+func (e *Binary) FromModel(m *model.Binary) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -53,12 +59,15 @@ func (e *Binary) From(m *model.Binary) {
 }
 
 func CreateBinary(e *Binary) *Binary {
+	if e == nil {
+		e = &Binary{}
+	}
 	e.BinaryId = util.CreateObjectId()
 	return e
 }
 
 func CreateBinaryFromModel(m *model.Binary) *Binary {
 	var e Binary
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

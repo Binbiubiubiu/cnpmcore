@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -12,7 +12,10 @@ type Scope struct {
 	RegistryId string `json:"registry_id,omitempty"`
 }
 
-func (e *Scope) Into() *model.Scope {
+func (e *Scope) IntoModel() *model.Scope {
+	if e == nil {
+		return nil
+	}
 	var m model.Scope
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -23,7 +26,10 @@ func (e *Scope) Into() *model.Scope {
 	return &m
 }
 
-func (e *Scope) From(m *model.Scope) {
+func (e *Scope) FromModel(m *model.Scope) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -33,12 +39,15 @@ func (e *Scope) From(m *model.Scope) {
 }
 
 func CreateScope(e *Scope) *Scope {
+	if e == nil {
+		e = &Scope{}
+	}
 	e.ScopeId = util.CreateObjectId()
 	return e
 }
 
 func CreateScopeFromModel(m *model.Scope) *Scope {
 	var e Scope
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

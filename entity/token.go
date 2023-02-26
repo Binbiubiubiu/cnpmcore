@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/Binbiubiubiu/cnpmcore/util"
 )
 
@@ -16,7 +16,10 @@ type Token struct {
 	CidrWhitelist []string `json:"cidr_whitelist,omitempty"`
 }
 
-func (e *Token) Into() *model.Token {
+func (e *Token) IntoModel() *model.Token {
+	if e == nil {
+		return nil
+	}
 	var m model.Token
 	m.ID = e.ID
 	m.UpdateAt = e.UpdateAt
@@ -31,7 +34,10 @@ func (e *Token) Into() *model.Token {
 	return &m
 }
 
-func (e *Token) From(m *model.Token) {
+func (e *Token) FromModel(m *model.Token) {
+	if e == nil || m == nil {
+		return
+	}
 	e.ID = m.ID
 	e.UpdateAt = m.UpdateAt
 	e.CreateAt = m.CreateAt
@@ -45,12 +51,15 @@ func (e *Token) From(m *model.Token) {
 }
 
 func CreateToken(e *Token) *Token {
+	if e == nil {
+		e = &Token{}
+	}
 	e.UserId = util.CreateObjectId()
 	return e
 }
 
 func CreateTokenFromModel(m *model.Token) *Token {
 	var e Token
-	e.From(m)
+	e.FromModel(m)
 	return &e
 }

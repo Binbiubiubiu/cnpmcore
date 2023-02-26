@@ -1,21 +1,21 @@
 package repository
 
 import (
-	"github.com/Binbiubiubiu/cnpmcore/core/entity"
+	"github.com/Binbiubiubiu/cnpmcore/entity"
 	"github.com/Binbiubiubiu/cnpmcore/global"
-	"github.com/Binbiubiubiu/cnpmcore/repository/model"
+	"github.com/Binbiubiubiu/cnpmcore/model"
 	"github.com/samber/lo"
 )
 
 type ChangeRepository struct{}
 
 func (r *ChangeRepository) AddChange(change *entity.Change) (err error) {
-	m := change.Into()
+	m := change.IntoModel()
 	err = global.DB.Create(m).Error
 	if err != nil {
 		return
 	}
-	change.From(m)
+	change.FromModel(m)
 	return
 }
 

@@ -6,8 +6,8 @@ import (
 
 type Task struct {
 	ID               uint           `gorm:"comment:primary key"`
-	CreateAt         time.Time      `gorm:"column:gmt_create;not null;comment:create time"`
-	UpdateAt         time.Time      `gorm:"column:gmt_modified;not null;index:idx_type_state_gmt_modified;index:idx_gmt_modified;comment:modified time"`
+	CreateAt         *time.Time     `gorm:"column:gmt_create;not null;comment:create time"`
+	UpdateAt         *time.Time     `gorm:"column:gmt_modified;not null;index:idx_type_state_gmt_modified;index:idx_gmt_modified;comment:modified time"`
 	TaskId           string         `gorm:"size:24;not null;uniqueIndex:uk_task_id;comment:task id;"`
 	Type             string         `gorm:"size:20;not null;index:idx_type_state_target_name;index:idx_type_state_gmt_modified;comment:scope id;"`
 	State            string         `gorm:"size:20;not null;index:idx_type_state_target_name;index:idx_type_state_gmt_modified;comment:task state;"`
